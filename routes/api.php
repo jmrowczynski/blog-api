@@ -17,7 +17,7 @@ use App\Http\Controllers\UsersController;
 
 Route::get('/posts', [PostsController::class, 'index']);
 
-Route::get('/users', [UsersController::class, 'index']);
+Route::get('/users/{user}', [UsersController::class, 'show']);
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
