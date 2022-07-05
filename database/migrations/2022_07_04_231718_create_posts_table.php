@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('title');
             $table->longText('content');
             $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('tags');
             $table->string('category');
 
