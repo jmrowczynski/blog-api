@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,10 +16,6 @@ use App\Http\Controllers\UsersController;
 |
 */
 
+Route::post('/register', [AuthController::class, 'register']);
 Route::get('/posts', [PostsController::class, 'index']);
-
 Route::get('/users/{user}', [UsersController::class, 'show']);
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
