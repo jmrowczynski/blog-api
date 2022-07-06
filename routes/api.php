@@ -16,11 +16,13 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
+        Route::post('/logout', [AuthController::class, 'logout']);
     }
 );
