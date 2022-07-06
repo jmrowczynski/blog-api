@@ -19,3 +19,9 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
+
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+//    private routes
+    }
+);
