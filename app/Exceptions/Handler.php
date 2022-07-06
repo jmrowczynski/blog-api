@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Mockery\Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +48,48 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return $this->handleApiException($request, $e);
+            }
+        });
+    }
+
+    private function handleApiException($request, $exception)
+    {
+        $exception = $this->prepareException($exception);
+
+        if ($exception instanceof \Illuminate\Http\Exceptions\HttpResponseException) {
+            $exception = $exception->getResponse();
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            $exception = $this->unauthenticated($request, $exception);
+        }
+
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return $this->customApiResponse($exception);
+    }
+
+    private function customApiResponse($e)
+    {
+        $statusCode = $e->getStatusCode();
+
+        $response['message'] = match ($statusCode) {
+            401 => 'Unauthorized',
+            403 => 'Forbidden',
+            404 => 'Not Found',
+            405 => 'Method Not Allowed',
+            422 => $e->getMessage(),
+            default => ($statusCode == 500) ? 'Looks like something went wrong' : $e->getMessage(),
+        };
+
+        $response['status'] = $statusCode;
+
+        return response()->json($response, $statusCode);
     }
 }

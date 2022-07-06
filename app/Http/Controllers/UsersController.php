@@ -11,8 +11,8 @@ class UsersController extends Controller
         return User::all();
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        return User::find($id);
+        return User::find($user->id);
     }
 }
