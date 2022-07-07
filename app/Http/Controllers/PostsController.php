@@ -10,12 +10,20 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         $params = $request->validate([
-           'per_page' => 'numeric|gt:0'
+           'per_page' => 'numeric|gt:0',
+           'title' => 'string',
         ]);
 
         $perPage = $params['per_page'] ?? 10;
 
-        return Post::paginate($perPage);
+        $posts = (new Post)->newQuery()->with('user');
+
+
+        if ($request->has('title')) {
+            $posts->where('title', 'like', "%" . $params['title'] . "%");
+        }
+
+        return $posts->paginate($perPage);
     }
 
     public function create()
