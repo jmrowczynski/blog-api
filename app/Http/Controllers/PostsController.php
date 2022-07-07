@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Post::all();
+        $params = $request->validate([
+           'per_page' => 'numeric|gt:0'
+        ]);
+
+        $perPage = $params['per_page'] ?? 10;
+
+        return Post::paginate($perPage);
     }
 
     public function create()
