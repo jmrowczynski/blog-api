@@ -24,6 +24,7 @@ Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
         Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/me', [UsersController::class, 'me']);
         Route::get('/me/posts', [UsersController::class, 'userPosts']);
     }
 );

@@ -17,6 +17,10 @@ class UsersController extends Controller
         return User::find($user->id);
     }
 
+    public function me(Request $request) {
+        return $request->user();
+    }
+
     public function userPosts(Request $request) {
         $user = $request->user();
         return $user->posts;
