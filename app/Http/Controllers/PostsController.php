@@ -11,16 +11,15 @@ class PostsController extends Controller
     {
         $params = $request->validate([
            'per_page' => 'numeric|gt:0',
-           'title' => 'string',
+           'search' => 'string|nullable',
         ]);
 
         $perPage = $params['per_page'] ?? 10;
 
         $posts = (new Post)->newQuery()->with('user');
 
-
-        if ($request->has('title')) {
-            $posts->where('title', 'like', "%" . $params['title'] . "%");
+        if ($request->has('search')) {
+            $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");
         }
 
         return $posts->paginate($perPage);
