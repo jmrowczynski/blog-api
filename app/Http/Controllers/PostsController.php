@@ -35,14 +35,9 @@ class PostsController extends Controller
     {
     }
 
-    public function show(Request $request)
+    public function show(Post $post)
     {
-
-        $post = Post::where('slug', '=', $request['slug'])->first();
-
-        if ($post) return $post;
-
-        abort(404, 'Post not found');
+        return $post;
     }
 
     public function edit(Post $post)
