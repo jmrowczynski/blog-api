@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,13 +19,14 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
+Route::get('/posts/{slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
-        Route::post('/logout', [AuthController::class, 'logout']);
-        Route::get('/me', [UsersController::class, 'me']);
-        Route::get('/me/posts', [UsersController::class, 'userPosts']);
-    }
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [UsersController::class, 'me']);
+    Route::get('/me/posts', [UsersController::class, 'userPosts']);
+}
 );

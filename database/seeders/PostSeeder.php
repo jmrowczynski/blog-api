@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Post;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class PostSeeder extends Seeder
 {
@@ -14,12 +15,16 @@ class PostSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 50; $i++) {
+            $title = $faker->sentence;
+            $slug = Str::slug($title, '-');
+
             Post::create([
-                'title' => $faker->sentence,
+                'title' => $title,
                 'tags' => $faker->text,
                 'category' => $faker->text,
                 'content' => $faker->paragraph,
-                'author_id' => 1
+                'author_id' => 1,
+                'slug' => $slug
             ]);
         }
     }

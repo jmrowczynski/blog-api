@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Mockery\Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostsController extends Controller
 {
     public function index(Request $request)
     {
         $params = $request->validate([
-           'per_page' => 'numeric|gt:0',
-           'search' => 'string|nullable',
+            'per_page' => 'numeric|gt:0',
+            'search' => 'string|nullable',
         ]);
 
         $perPage = $params['per_page'] ?? 10;
@@ -33,8 +35,14 @@ class PostsController extends Controller
     {
     }
 
-    public function show(Post $post)
+    public function show(Request $request)
     {
+
+        $post = Post::where('slug', '=', $request['slug'])->first();
+
+        if ($post) return $post;
+
+        abort(404, 'Post not found');
     }
 
     public function edit(Post $post)
