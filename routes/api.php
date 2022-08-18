@@ -29,5 +29,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/me', [UsersController::class, 'me']);
     Route::get('/me/posts', [UsersController::class, 'userPosts']);
     Route::post('/me', [UsersController::class, 'editMe']);
+    Route::post('/posts/store', [PostsController::class, 'store']);
 }
 );

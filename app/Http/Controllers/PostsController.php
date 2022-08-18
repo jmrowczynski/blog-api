@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Mockery\Exception;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostsController extends Controller
 {
@@ -33,6 +31,23 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'tags' => 'required|string',
+            'category' => 'required|string'
+        ]);
+
+        $user = $request->user();
+
+        $post = $user->posts()->create([
+            'title' => $fields['title'],
+            'content' => $fields['content'],
+            'tags' => $fields['tags'],
+            'category' => $fields['category'],
+        ]);
+
+        return response($post, 201);
     }
 
     public function show(Post $post)
