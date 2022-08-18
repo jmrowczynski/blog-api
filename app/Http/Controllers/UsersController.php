@@ -40,10 +40,10 @@ class UsersController extends Controller
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('public/avatars');
             $domain = $request->getSchemeAndHttpHost();
-            $publicUrl = Str::replace($domain . '/storage', 'public', $user->avatar);
+            $currentAvatarPublicUrl = Str::replace($domain . '/storage', 'public', $user->avatar);
 
-            if (Storage::exists($publicUrl)) {
-                Storage::delete($publicUrl);
+            if (Storage::exists($currentAvatarPublicUrl)) {
+                Storage::delete($currentAvatarPublicUrl);
             }
 
             $user->avatar = $domain . Storage::url($path);
