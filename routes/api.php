@@ -21,6 +21,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
+Route::get('/users', [UsersController::class, 'index']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -30,5 +31,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/me/posts', [UsersController::class, 'userPosts']);
     Route::post('/me', [UsersController::class, 'editMe']);
     Route::post('/posts/store', [PostsController::class, 'store']);
+    Route::delete('/users/{user}', [UsersController::class, 'destroy']);
 }
 );

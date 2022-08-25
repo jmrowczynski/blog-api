@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -11,6 +12,10 @@ class UsersController extends Controller
 {
     public function index()
     {
+        $users = User::all();
+        foreach ($users as $user) {
+            var_dump($user->roles());
+        }
         return User::all();
     }
 
@@ -58,5 +63,12 @@ class UsersController extends Controller
     {
         $user = $request->user();
         return $user->posts;
+    }
+
+    public function destroy(User $user)
+    {
+        Gate::authorize('delete-user', [$user]);
+
+        return 'destroy';
     }
 }
