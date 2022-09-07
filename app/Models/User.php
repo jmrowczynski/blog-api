@@ -43,6 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin()
+    {
+        return $this->roles()->wherePivot('id', '=', 1)->exists();
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');

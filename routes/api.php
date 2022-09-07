@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/users', [UsersController::class, 'index']);
+Route::get('/roles', [RolesController::class, 'index']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

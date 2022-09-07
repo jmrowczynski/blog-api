@@ -12,11 +12,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        foreach ($users as $user) {
-            var_dump($user->roles());
-        }
-        return User::all();
+        return User::with('roles:id,name')->get();
     }
 
     public function show(User $user)
