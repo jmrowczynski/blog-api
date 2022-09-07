@@ -43,6 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'roles:id,name'
+    ];
+
     public function isAdmin()
     {
         return $this->roles()->wherePivot('id', '=', 1)->exists();

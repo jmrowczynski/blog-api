@@ -14,7 +14,7 @@ class UsersController extends Controller
     {
         Gate::authorize('get-users');
 
-        return User::with('roles:id,name')->get();
+        return User::all();
     }
 
     public function show(User $user)
