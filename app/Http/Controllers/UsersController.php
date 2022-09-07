@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
     public function index()
     {
+        Gate::authorize('get-users');
+
         return User::with('roles:id,name')->get();
     }
 

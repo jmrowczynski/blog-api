@@ -22,12 +22,11 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
-Route::get('/users', [UsersController::class, 'index']);
 Route::get('/roles', [RolesController::class, 'index']);
-
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
+    Route::get('/users', [UsersController::class, 'index']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [UsersController::class, 'me']);
     Route::get('/me/posts', [UsersController::class, 'userPosts']);
