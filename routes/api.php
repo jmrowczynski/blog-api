@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/roles', [RolesController::class, 'index']);
+Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
