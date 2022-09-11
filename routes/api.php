@@ -25,6 +25,7 @@ Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/roles', [RolesController::class, 'index']);
 Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
