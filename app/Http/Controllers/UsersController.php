@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -42,14 +41,12 @@ class UsersController extends Controller
 
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('public/avatars');
-            $domain = $request->getSchemeAndHttpHost();
-            $currentAvatarPublicUrl = Str::replace($domain . '/storage', 'public', $user->avatar);
 
-            if (Storage::exists($currentAvatarPublicUrl)) {
-                Storage::delete($currentAvatarPublicUrl);
+            if (Storage::exists($user->avatar)) {
+                Storage::delete($user->avatar);
             }
 
-            $user->avatar = $domain . Storage::url($path);
+            $user->avatar = $path;
         }
 
         $user->save();
