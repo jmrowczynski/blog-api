@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\ImagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/me', [UsersController::class, 'editMe']);
     Route::post('/posts/store', [PostsController::class, 'store']);
     Route::delete('/users/{user}', [UsersController::class, 'destroy']);
+    Route::post('/images/store', [ImagesController::class, 'store']);
 }
 );
