@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -56,8 +57,20 @@ class UsersController extends Controller
 
     public function userPosts(Request $request)
     {
-        $user = $request->user();
-        return $user->posts;
+        $params = $request->validate([
+            'per_page' => 'numeric|gt:0',
+            'search' => 'string|nullable',
+        ]);
+
+        $perPage = $params['per_page'] ?? 10;
+
+        $posts = (new Post)->newQuery()->with('user')->where('author_id', $request->user()->id);
+
+        if ($request->has('search')) {
+            $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");
+        }
+
+        return $posts->paginate($perPage);
     }
 
     public function destroy(User $user)
