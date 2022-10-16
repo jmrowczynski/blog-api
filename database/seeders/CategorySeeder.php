@@ -9,6 +9,8 @@ class CategorySeeder extends Seeder
 {
     public function run()
     {
+        Category::truncate();
+
         $categories = ['Test category', 'Technology', 'Design', 'Management'];
 
         foreach ($categories as $category) {

@@ -43,7 +43,7 @@ class UsersController extends Controller
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('public/avatars');
 
-            if (Storage::exists($user->avatar)) {
+            if ($user->avatar && Storage::exists($user->avatar)) {
                 Storage::delete($user->avatar);
             }
 

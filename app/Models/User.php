@@ -82,7 +82,11 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                return asset(Storage::url($attributes['avatar']));
+                if ($attributes['avatar']) {
+                    return asset(Storage::url($attributes['avatar']));
+                }
+
+                return null;
             }
         );
     }

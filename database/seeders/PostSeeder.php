@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -21,9 +23,9 @@ class PostSeeder extends Seeder
             Post::create([
                 'title' => $title,
                 'tags' => $faker->text,
-                'category' => $faker->text,
                 'content' => $faker->paragraph,
-                'author_id' => 1,
+                'author_id' => User::inRandomOrder()->first('id')->id,
+                'category_id' => Category::inRandomOrder()->first('id')->id,
                 'slug' => $slug
             ]);
         }

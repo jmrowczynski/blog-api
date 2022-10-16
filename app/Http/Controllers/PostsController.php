@@ -44,7 +44,6 @@ class PostsController extends Controller
             'title' => $fields['title'],
             'content' => $fields['content'],
             'tags' => $fields['tags'],
-            'category' => $fields['category'],
         ]);
 
         return response($post, 201);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -10,7 +11,17 @@ class Post extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ['title', 'category', 'content', 'tags', 'slug'];
+    protected $fillable = ['title', 'content', 'tags', 'slug'];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'category_id',
+        'author_id'
+    ];
 
     public function sluggable(): array
     {
@@ -26,8 +37,8 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasOne(Category::class);
     }
 }
