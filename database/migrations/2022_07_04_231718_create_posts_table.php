@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('category_id')->nullable();
-            $table->string('tags');
             $table->string('slug')->unique()->nullable();
 
             $table->timestamps();

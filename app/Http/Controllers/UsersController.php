@@ -64,7 +64,7 @@ class UsersController extends Controller
 
         $perPage = $params['per_page'] ?? 10;
 
-        $posts = (new Post)->newQuery()->with('user')->where('author_id', $request->user()->id);
+        $posts = (new Post())->where('author_id', $request->user()->id);
 
         if ($request->has('search')) {
             $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");

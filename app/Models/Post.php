@@ -23,6 +23,11 @@ class Post extends Model
         'author_id'
     ];
 
+    protected $with = [
+        'user',
+        'category:id,name'
+    ];
+
     public function sluggable(): array
     {
         return [
@@ -39,6 +44,6 @@ class Post extends Model
 
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

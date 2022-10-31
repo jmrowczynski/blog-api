@@ -16,7 +16,7 @@ class PostsController extends Controller
 
         $perPage = $params['per_page'] ?? 10;
 
-        $posts = (new Post)->newQuery()->with('user');
+        $posts = new Post();
 
         if ($request->has('search')) {
             $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");

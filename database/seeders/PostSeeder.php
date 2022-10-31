@@ -22,7 +22,6 @@ class PostSeeder extends Seeder
 
             Post::create([
                 'title' => $title,
-                'tags' => $faker->text,
                 'content' => $faker->paragraph,
                 'author_id' => User::inRandomOrder()->first('id')->id,
                 'category_id' => Category::inRandomOrder()->first('id')->id,
