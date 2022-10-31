@@ -64,10 +64,13 @@ class UsersController extends Controller
 
         $perPage = $params['per_page'] ?? 10;
 
-        $posts = (new Post())->where('author_id', $request->user()->id)->without('user');
+        $posts = (new Post())->latest()->where('author_id', $request->user()->id);
 
-        if ($request->has('search')) {
-            $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");
+        if ($request->has('search') && $params['search']) {
+            $posts->where(function ($query) use ($params) {
+                $query->where('title', 'like', "%" . $params['search'] . "%")
+                    ->orWhere('content', 'like', "%" . $params['search'] . "%");
+            });
         }
 
         return $posts->paginate($perPage);

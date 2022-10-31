@@ -16,10 +16,13 @@ class PostsController extends Controller
 
         $perPage = $params['per_page'] ?? 10;
 
-        $posts = new Post();
+        $posts = (new Post())->latest();
 
-        if ($request->has('search')) {
-            $posts->where('title', 'like', "%" . $params['search'] . "%")->orWhere('content', 'like', "%" . $params['search'] . "%");
+        if ($request->has('search') && $params['search']) {
+            $posts->where(function ($query) use ($params) {
+                $query->where('title', 'like', "%" . $params['search'] . "%")
+                    ->orWhere('content', 'like', "%" . $params['search'] . "%");
+            });
         }
 
         return $posts->paginate($perPage);
@@ -34,8 +37,7 @@ class PostsController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'tags' => 'required|string',
-            'category' => 'required|string'
+            'category_id' => 'numeric'
         ]);
 
         $user = $request->user();
@@ -43,7 +45,7 @@ class PostsController extends Controller
         $post = $user->posts()->create([
             'title' => $fields['title'],
             'content' => $fields['content'],
-            'tags' => $fields['tags'],
+            'category_id' => $fields['category_id'],
         ]);
 
         return response($post, 201);
