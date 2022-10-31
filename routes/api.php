@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/roles', [RolesController::class, 'index']);
+Route::get('/categories', [CategoriesController::class, 'index']);
 Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
