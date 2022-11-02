@@ -24,7 +24,7 @@ class Post extends Model
     ];
 
     protected $with = [
-        'user',
+        'user:id,name',
         'category:id,name'
     ];
 
