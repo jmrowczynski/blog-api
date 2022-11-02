@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ['title', 'content', 'tags', 'slug'];
+    protected $fillable = ['title', 'content', 'tags', 'slug', 'category_id'];
 
     /**
      * The attributes that should be hidden for serialization.

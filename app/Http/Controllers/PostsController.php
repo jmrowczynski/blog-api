@@ -38,7 +38,7 @@ class PostsController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'category_id' => 'numeric'
+            'category_id' => 'required|numeric|exists:App\Models\Category,id'
         ]);
 
         $user = $request->user();
