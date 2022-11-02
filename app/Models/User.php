@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('id', '=', 1)->exists();
     }
 
+    public function isPostOwner(Post $post)
+    {
+        return $this->id === $post->user->id;
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
@@ -82,7 +87,7 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                if ($attributes['avatar']) {
+                if (isset($attributes['avatar'])) {
                     return asset(Storage::url($attributes['avatar']));
                 }
 

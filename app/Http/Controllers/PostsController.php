@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostsController extends Controller
 {
@@ -66,5 +67,9 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        Gate::authorize('delete-post', [$post]);
+        $post->delete();
+
+        return response(['message' => 'Post deleted successfully'], 200);
     }
 }
