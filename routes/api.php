@@ -41,5 +41,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/users/{user}', [UsersController::class, 'destroy']);
     Route::post('/images/store', [ImagesController::class, 'store']);
     Route::delete('/posts/{post}', [PostsController::class, 'destroy']);
+    Route::put('/posts/{post}', [PostsController::class, 'update']);
 }
 );

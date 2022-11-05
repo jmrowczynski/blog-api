@@ -63,6 +63,30 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        Gate::authorize('update-post', [$post]);
+
+
+        $fields = $request->validate([
+            'title' => 'string|min:2',
+            'content' => 'string|min:2',
+            'category_id' => 'numeric|exists:App\Models\Category,id'
+        ]);
+
+        if ($request->has('title')) {
+            $post->title = $fields['title'];
+        }
+
+        if ($request->has('content')) {
+            $post->content = $fields['content'];
+        }
+
+        if ($request->has('category_id')) {
+            $post->category_id = $fields['category_id'];
+        }
+
+        $post->save();
+
+        return response($post, 200);
     }
 
     public function destroy(Post $post)

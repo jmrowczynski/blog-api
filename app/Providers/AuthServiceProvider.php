@@ -47,5 +47,12 @@ class AuthServiceProvider extends ServiceProvider
             }
             return false;
         });
+
+        Gate::define('update-post', function (User $user, Post $post) {
+            if ($user->isAdmin() || $user->isPostOwner($post)) {
+                return true;
+            }
+            return false;
+        });
     }
 }
