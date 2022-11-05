@@ -38,7 +38,7 @@ class PostsController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'category_id' => 'required|numeric|exists:App\Models\Category,id'
+            'category_id' => 'numeric|exists:App\Models\Category,id'
         ]);
 
         $user = $request->user();
@@ -46,7 +46,7 @@ class PostsController extends Controller
         $post = $user->posts()->create([
             'title' => $fields['title'],
             'content' => $fields['content'],
-            'category_id' => $fields['category_id'],
+            'category_id' => $request->has('category_id') ? $fields['category_id'] : null,
         ]);
 
         return response($post, 201);
