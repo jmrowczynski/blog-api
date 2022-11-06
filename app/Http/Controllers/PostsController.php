@@ -38,7 +38,8 @@ class PostsController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'category_id' => 'numeric|exists:App\Models\Category,id'
+            'category_id' => 'numeric|nullable|exists:App\Models\Category,id',
+            'excerpt' => 'string|nullable'
         ]);
 
         $user = $request->user();
@@ -47,6 +48,7 @@ class PostsController extends Controller
             'title' => $fields['title'],
             'content' => $fields['content'],
             'category_id' => $request->has('category_id') ? $fields['category_id'] : null,
+            'excerpt' => $request->has('excerpt') ? $fields['excerpt'] : null,
         ]);
 
         return response($post, 201);
@@ -69,7 +71,8 @@ class PostsController extends Controller
         $fields = $request->validate([
             'title' => 'string|min:2',
             'content' => 'string|min:2',
-            'category_id' => 'numeric|exists:App\Models\Category,id'
+            'category_id' => 'numeric|exists:App\Models\Category,id',
+            'excerpt' => 'string'
         ]);
 
         if ($request->has('title')) {
@@ -82,6 +85,10 @@ class PostsController extends Controller
 
         if ($request->has('category_id')) {
             $post->category_id = $fields['category_id'];
+        }
+
+        if ($request->has('excerpt')) {
+            $post->excerpt = $fields['excerpt'];
         }
 
         $post->save();
