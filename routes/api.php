@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/posts/store', [PostsController::class, 'store']);
     Route::delete('/users/{user}', [UsersController::class, 'destroy']);
     Route::post('/images/store', [ImagesController::class, 'store']);
-    Route::delete('/posts/{post}', [PostsController::class, 'destroy']);
+    Route::delete('/posts/{post:slug}', [PostsController::class, 'destroy']);
     Route::put('/posts/{post:slug}', [PostsController::class, 'update']);
 }
 );
