@@ -36,7 +36,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|min:2',
             'content' => 'required|string',
             'category_id' => 'numeric|nullable|exists:App\Models\Category,id',
             'excerpt' => 'string|nullable'
