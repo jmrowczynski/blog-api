@@ -25,7 +25,8 @@ class PostSeeder extends Seeder
                 'content' => $faker->paragraph,
                 'author_id' => User::inRandomOrder()->first('id')->id,
                 'category_id' => Category::inRandomOrder()->first('id')->id,
-                'slug' => $slug
+                'slug' => $slug,
+                'excerpt' => $faker->sentence(10)
             ]);
         }
     }

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('category_id')->nullable();
             $table->string('slug')->unique()->nullable();
+            $table->string('excerpt')->nullable();
 
             $table->timestamps();
         });
