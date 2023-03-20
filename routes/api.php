@@ -1,13 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ImagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +19,19 @@ use App\Http\Controllers\CategoriesController;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+//Route::post('/register', [AuthController::class, 'register']);
+//Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/roles', [RolesController::class, 'index']);
 Route::get('/categories', [CategoriesController::class, 'index']);
-Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
-Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+//Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
+//Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
     Route::get('/users', [UsersController::class, 'index']);
-    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [UsersController::class, 'me']);
     Route::get('/me/posts', [UsersController::class, 'userPosts']);
     Route::post('/me', [UsersController::class, 'editMe']);
