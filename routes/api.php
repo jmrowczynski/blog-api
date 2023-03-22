@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RolesController;
@@ -19,15 +18,11 @@ use App\Http\Controllers\ImagesController;
 |
 */
 
-//Route::post('/register', [AuthController::class, 'register']);
-//Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostsController::class, 'show']);
 Route::get('/users/{user}', [UsersController::class, 'show']);
 Route::get('/roles', [RolesController::class, 'index']);
 Route::get('/categories', [CategoriesController::class, 'index']);
-//Route::post('/forgot-password', [ResetPasswordController::class, 'forgot']);
-//Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //    private routes
